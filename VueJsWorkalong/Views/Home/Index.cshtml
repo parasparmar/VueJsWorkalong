@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<div class="text-center">
+
+    <img :src="imgSrc" :title="imgTitle" :alt="imgTitle" />
+    <h1 class="display-4">{{imgTitle}}</h1>
+    <p>{{imgDate}}</p>
+    <p>{{imgHdUrl}}</p>
+    <p>{{imgMediaType}}</p>
+    <p>{{imgServiceVersion}}</p>
+    <p>{{imgDescription}}</p>
+    <p>{{imgDescription}}</p>
+
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                imgSrc: '',
+                imgHdUrl: '',
+                imgTitle: '',
+                imgDescription: '',
+                imgDate: '',
+                imgMediaType: '',
+                imgServiceVersion: '',
+                imgDescription: ''
+            },
+            created: function () {
+                // Run this function as soon as the page is created.
+                this.fetchApod();
+            },
+            methods: {
+                // Uses NASA's Astronomy API to fetch the Astronomy picture of the day.
+                fetchApod: function () {
+                    var apiKey = "MKTeRhimZ3uiDIQWZF6824vWYhzwk2gva3lrqLIb";
+                    var url = "https://api.nasa.gov/planetary/apod?api_key=" + apiKey;
+                    axios.get(url)
+                        .then(function (res) {
+
+                            vm.imgSrc = res.data.url;
+                            vm.imgTitle = res.data.title;
+                            vm.imgDescription = res.data.explanation;
+                            vm.imgHdUrl = res.data.hdurl;
+                            vm.imgDate = res.data.date;
+                            vm.imgMediaType = res.data.image;
+                            vm.imgServiceVersion = res.data.service_version;
+                        });
+                }
+            }
+        });
+        vm.fetchApod();
+
+    </script>
+}
