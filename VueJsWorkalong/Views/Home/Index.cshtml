@@ -5,21 +5,32 @@
 
 
 <div class="text-center">
-
-    <img :src="imgSrc" :title="imgTitle" :alt="imgTitle" />
+    <img :src="imgSrc" :title="imgTitle" :href="imgHdUrl" :alt="imgTitle" />
     <h1 class="display-4">{{imgTitle}}</h1>
+    <p>{{imgDescription}}</p>
     <p>{{imgDate}}</p>
     <p>{{imgHdUrl}}</p>
     <p>{{imgMediaType}}</p>
     <p>{{imgServiceVersion}}</p>
-    <p>{{imgDescription}}</p>
-    <p>{{imgDescription}}</p>
+</div>
 
+table>thead>td*10
+
+
+
+<div class="card" style="">
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
 </div>
 
 @section Scripts{
     <script type="text/javascript">
-
+        const apiKey = "MKTeRhimZ3uiDIQWZF6824vWYhzwk2gva3lrqLIb";
+        var url = "";
 
         var vm = new Vue({
             el: "#app",
@@ -31,20 +42,22 @@
                 imgDate: '',
                 imgMediaType: '',
                 imgServiceVersion: '',
-                imgDescription: ''
+                imgDescription: '',
+                asteroids:[]
             },
+
             created: function () {
                 // Run this function as soon as the page is created.
-                this.fetchApod();
+                //this.fetchApod();
+                //this.fetchAsteroids();
             },
+
             methods: {
                 // Uses NASA's Astronomy API to fetch the Astronomy picture of the day.
                 fetchApod: function () {
-                    var apiKey = "MKTeRhimZ3uiDIQWZF6824vWYhzwk2gva3lrqLIb";
-                    var url = "https://api.nasa.gov/planetary/apod?api_key=" + apiKey;
+                    url = "https://api.nasa.gov/planetary/apod?api_key=" + apiKey;
                     axios.get(url)
                         .then(function (res) {
-
                             vm.imgSrc = res.data.url;
                             vm.imgTitle = res.data.title;
                             vm.imgDescription = res.data.explanation;
@@ -53,10 +66,22 @@
                             vm.imgMediaType = res.data.image;
                             vm.imgServiceVersion = res.data.service_version;
                         });
+                },
+
+                // Uses NASA's Astronomy API to fetch Near Earth objects like asteroids and Comets.
+                fetchAsteroids: function () {
+                    debugger;
+                    url = "https://api.nasa.gov/neo/rest/v1/feed?start_date=START_DATE&end_date=END_DATE&api_key=" + apiKey;
+                    url = url.replace("START_DATE", "2020-08-30");
+                    url = url.replace("END_DATE", "2020-08-30");
+                    
+                    axios.get(url).then(function (res) {
+                        console.log(res);
+                        vm.asteroids = res.data.near_earth_objects;
+                    });
                 }
+
             }
         });
-        vm.fetchApod();
-
     </script>
 }
