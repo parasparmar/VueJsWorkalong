@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewData["Title"] = "NEO";
+}
+
+<h1>NEO - Near Earth Objects</h1>
+
+
+<table class="table">
+    <thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Close Approach Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+@*<div class="card" style="">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>*@
+
+@section Scripts{
+    <script type="text/javascript">
+        const apiKey = "MKTeRhimZ3uiDIQWZF6824vWYhzwk2gva3lrqLIb";
+        var url = "";
+
+        var vm = new Vue({
+            el: "#app",
+            data: {                
+                asteroids: []
+            },
+
+            created: function () {
+                // Run this function as soon as the page is created.               
+                this.fetchAsteroids();
+            },
+
+            methods: {               
+
+                // Uses NASA's Astronomy API to fetch Near Earth objects like asteroids and Comets.
+                fetchAsteroids: function () {
+                    debugger;
+                    url = "https://api.nasa.gov/neo/rest/v1/feed?start_date=START_DATE&end_date=END_DATE&api_key=" + apiKey;
+                    url = url.replace("START_DATE", "2020-08-31");
+                    url = url.replace("END_DATE", "2020-08-31");
+
+                    axios.get(url).then(function (res) {
+                        console.log(res);
+                        vm.asteroids = res.data.near_earth_objects;
+                    });
+                }
+
+            }
+        });
+    </script>
+}
