@@ -23,7 +23,7 @@ namespace VueJsWorkalong.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult NEO()
         {
             return View();
         }
