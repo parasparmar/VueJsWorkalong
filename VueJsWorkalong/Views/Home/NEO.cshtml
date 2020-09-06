@@ -4,7 +4,12 @@
 }
 
 <h1>NEO - Near Earth Objects</h1>
+<div class="card">
+    <h2 class="card-header">Near Earth Objects</h2>
+    <div class="m-3" v-if="asteroids.length > 0">
 
+    </div>
+</div>
 
 <table class="table table-bordered table-striped">
     <thead class="table-light">
@@ -26,13 +31,13 @@
             <th></th>
         </tr>
     </thead>
-    <tbody v-cloak>
-        <tr v-for="(a,name,index) in asteroids">
-            <td>{{index + 1}}</td>
+    <tbody>
+        <tr v-for="(a,index) in asteroids">
+            <td>{{index+1}}</td>
+            <td>{{a.is_potentially_hazardous_asteroid}}</td>
             <td>{{a.name}}</td>
-            <td>{{name}}</td>
-            <td>{{a}}</td>
-            <td></td>
+            <td>{{a.close_approach_data[0].close_approach_date_full}}</td>
+            <td><ul><li v-for="b in asteroids.close_approach_data">{{b.close_approach_date_full}}</li></ul></td>
             <td></td>
             <td></td>
             <td></td>
@@ -49,9 +54,9 @@
 
 @section Scripts{
     <script type="text/javascript">
+
         const apiKey = "MKTeRhimZ3uiDIQWZF6824vWYhzwk2gva3lrqLIb";
         var url = "";
-
         var vm = new Vue({
             el: "#app",
             data: {
@@ -70,18 +75,17 @@
                     url = "https://api.nasa.gov/neo/rest/v1/feed?start_date=START_DATE&end_date=END_DATE&api_key=" + apiKey;
                     url = url.replace("START_DATE", "2020-08-31");
                     url = url.replace("END_DATE", "2020-08-31");
-
                     axios.get(url).then(function (res) {
                         debugger;
-                        vm.dates = Object.keys(res.data.near_earth_objects);
-                        vm.dates.forEach(a => vm.asteroids.push(vm.dates[a].near_earth_objects));
-                        //vm.asteroids = res.data.near_earth_objects;
+                        var neo = res.data.near_earth_objects;
+                        console.log(neo);
+                        for (const [key, value] of Object.entries(neo)) {
+                            vm.asteroids = value;
+                            console.log(`${key}: ${value}`);
+                        }
+                        console.log(vm.asteroids);
                     });
                 }
-
-                //Get Close Approach date
-                // getCloseApproachDate(a)
-
             }
         });
     </script>
