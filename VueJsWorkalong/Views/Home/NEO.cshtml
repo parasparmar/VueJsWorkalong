@@ -7,50 +7,50 @@
 <div class="card">
     <h2 class="card-header">Near Earth Objects</h2>
     <div class="m-3" v-if="asteroids.length > 0">
-
+        <table class="table table-bordered table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Hazardous Asteroid</th>
+                    <th>Asteroid Name</th>
+                    <th>Close Approach Date</th>
+                    <th>Miss Distance</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(a,index) in asteroids">
+                    <td>{{index+1}}</td>
+                    <td>{{a.is_potentially_hazardous_asteroid}}</td>
+                    <td>{{a.name}}</td>
+                    <td>{{a.close_approach_data[0].close_approach_date_full}}</td>
+                    <td><ul><li v-for="b in asteroids.close_approach_data">{{b.close_approach_date_full}}</li></ul></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
-<table class="table table-bordered table-striped">
-    <thead class="table-light">
-        <tr>
-            <th>#</th>
-            <th>Date</th>
-            <th>NEO Name</th>
-            <th>Close Approach Date</th>
-            <th>Miss Distance</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr v-for="(a,index) in asteroids">
-            <td>{{index+1}}</td>
-            <td>{{a.is_potentially_hazardous_asteroid}}</td>
-            <td>{{a.name}}</td>
-            <td>{{a.close_approach_data[0].close_approach_date_full}}</td>
-            <td><ul><li v-for="b in asteroids.close_approach_data">{{b.close_approach_date_full}}</li></ul></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
+
 
 @section Scripts{
     <script type="text/javascript">
